@@ -1,0 +1,6 @@
+f(x) = e^-x^2-cos(x)
+f'(x) = sen(x)-2xe^-x^2
+phi = cos(x)-e^-x^2+x
+precisao = 10^-2
+intervalo = [1, 2]
+x0=1.5
