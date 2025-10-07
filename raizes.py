@@ -3,10 +3,12 @@ import re
 from tabulate import tabulate
 
 def formatarFuncao(txt):
+    #adicionando multiplicacoes implicitas (xx, xlog(x), 2x, etc)
     txt = re.sub(r'([0-9xe])([lxe])', r'\1*\2', txt)
     txt = re.sub(r'([xe])([0-9xe])', r'\1*\2', txt)
     txt = re.sub(r'([0-9xe)])([(])', r'\1*\2', txt)
     txt = re.sub(r'([)])([0-9xe(])', r'\1*\2', txt)
+    #substituindo pelos termos funcionais do python
     txt = txt.replace("log", "log10")
     txt = txt.replace("ln", "log")
     txt = txt.replace("^", "**")
@@ -17,6 +19,7 @@ def formatarFuncao(txt):
 def calcularFuncao(x, funcao):
     return eval(funcao)
 
+#funcao para criar nova linha na tabela de resultados caso ainda nao exista
 def createNewLine(saida, k):
     if(len(saida) <= k):
         saida.append([k, '#', '#', '#', '#', '#'])
@@ -91,9 +94,11 @@ def regulaFalsi(funcao, x0, x1, delta, it, saida):
     print(k)
     return x
 
+#abrindo o arquivo txt e separando cada item do arquivo em uma linha do array
 file_obj = open("entrada.txt", "r")
 dados = file_obj.readlines()
 
+#formatando todos os dados do txt de modo que possam ser utilizados
 funcao = formatarFuncao(dados[0].split('=')[1])
 
 derivada = formatarFuncao(dados[1].split('=')[1])
